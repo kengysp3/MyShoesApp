@@ -13,9 +13,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel() : ViewModel() {
+
     private val produtoRepository = ProdutoRepository()
     private val userRepository = UserRepository()
     private val categorieRepository = CategorieRepository()
+
     private val _homeUiSate = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val homeUiState: StateFlow<HomeUiState> = _homeUiSate.asStateFlow()
 
@@ -25,6 +27,8 @@ class HomeViewModel() : ViewModel() {
             HomeIntent.LoadScreen -> {
                 loadHomeScreen()
             }
+
+            is HomeIntent.OnProductClickWithData -> TODO()
         }
 
     }
@@ -34,12 +38,17 @@ class HomeViewModel() : ViewModel() {
         viewModelScope.launch {
             delay(2000)
             _homeUiSate.update {
-                HomeUiState.Success(serarchUser(), searchProducts(), searchCategories())
+                try {
+                    HomeUiState.Success(serarchUser(), searchProducts(), searchCategories())
+
+                } catch (e: Exception) {
+                    HomeUiState.Error("Algo deu errado, Tente novamente.")
+                }
             }
         }
     }
 
-    private fun searchProducts() = produtoRepository.searchProducts()
+    private fun searchProducts() = produtoRepository.searc2hProducts()
 
     private fun serarchUser() = userRepository.searchUser()
 

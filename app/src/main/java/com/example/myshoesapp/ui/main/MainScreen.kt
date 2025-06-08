@@ -8,9 +8,6 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -31,6 +28,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.myshoesapp.R
+import com.example.myshoesapp.model.Categorie
+import com.example.myshoesapp.model.Product
+import com.example.myshoesapp.model.User
 import com.example.myshoesapp.ui.home.HomeIntent
 import com.example.myshoesapp.ui.home.HomeScreen
 import com.example.myshoesapp.ui.home.HomeUiState
@@ -61,21 +61,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview
-@Composable
-fun MainScrennPreview() {
-
-    // MainScreen()
-
-}
-
 @Composable
 fun MainScreen(mainUiState: HomeUiState) {
     val navController = rememberNavController()
     val items = mutableListOf(
         BottomNavItem.Home,
+        BottomNavItem.Cart,
         BottomNavItem.Profile,
-        BottomNavItem.Settings
+
     )
     MyShoesAppTheme {
         Scaffold(
@@ -123,16 +116,81 @@ fun MainScreen(mainUiState: HomeUiState) {
                     .background(White)
             ) {
                 composable(BottomNavItem.Home.route) { HomeScreen(mainUiState) }
+                composable(BottomNavItem.Cart.route) { ShoppingCartScreen() }
                 composable(BottomNavItem.Profile.route) { ProfileScreen() }
-                composable(BottomNavItem.Settings.route) { ShoppingCartScreen() }
+
             }
         }
     }
 
 }
 
+@Preview(showBackground = true)
+@Composable
+fun PreviewMainScreen() {
+
+    val itens = listOf(
+        Product(
+            imageUrl = R.drawable.airmax,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.maxdn,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.airzoom,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.chuteira,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.chuteira,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.airzoom,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.chuteira,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.airmax,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+
+        )
+    val categories = listOf(
+        Categorie("Todos"),
+        Categorie("Tênis"),
+        Categorie("Botas"),
+        Categorie("Chuteiras"),
+        Categorie("Sapatênis")
+    )
+
+    val user = User("Kengy")
+
+    val fakeState = HomeUiState.Success(user = user, listItem = itens,categories)
+
+    MyShoesAppTheme {
+        MainScreen(mainUiState = fakeState)
+    }
+}
+
 sealed class BottomNavItem(val route: String, val icon: Int, val label: String) {
     data object Home : BottomNavItem("home", R.drawable.home, "Home")
-    data object Profile : BottomNavItem("profile", R.drawable.cart, "Carrinho")
-    data object Settings : BottomNavItem("settings", R.drawable.user, "Perfil")
+    data object Cart : BottomNavItem("cart", R.drawable.cart, "Carrinho")
+    data object Profile : BottomNavItem("profile", R.drawable.user, "Perfil")
 }

@@ -27,10 +27,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myshoesapp.R
 import com.example.myshoesapp.model.Product
+import com.example.myshoesapp.ui.theme.GrayNeutral
 
 
 @Composable
-fun ProductGrid(products: List<Product>) {
+fun ProductGrid( mainUiState: Main products: List<Product>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -63,6 +64,7 @@ fun ProductCard(
             modifier = Modifier.padding(8.dp)
         ) {
             Image(
+                onClick= { onIntent(HomeUiIntent.OnProductClickWithData(product) }
                 painter = painterResource(id = imageRes),
                 contentDescription = name,
                 contentScale = ContentScale.Crop,
@@ -72,7 +74,7 @@ fun ProductCard(
             Text(
                 text = name,
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray,
+                color = GrayNeutral,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Left

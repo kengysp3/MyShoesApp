@@ -13,4 +13,6 @@ val Pink40 = Color(0xFF7D5260)
 val OrangeFilterSelected = Color(0xFFFF8D41)
 val GrayLight = Color(0xFFBDBDBD)
 
+val GrayNeutral = Color(0xFF757575)
+
 
