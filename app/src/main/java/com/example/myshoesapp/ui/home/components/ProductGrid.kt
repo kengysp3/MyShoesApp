@@ -1,20 +1,16 @@
-package com.example.myshoesapp.ui.homescreen.components
+package com.example.myshoesapp.ui.home.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,10 +34,9 @@ fun ProductGrid(products: List<Product>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(5.dp),
+        horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         items(products) { product ->
             ProductCard(
@@ -62,25 +57,16 @@ fun ProductCard(
     price: String,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier
-            .width(160.dp)
-            .padding(8.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF7F7F7)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
+
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier.padding(8.dp)
         ) {
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = name,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .size(120.dp)
-                    .padding(8.dp)
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
@@ -89,16 +75,16 @@ fun ProductCard(
                 color = Color.Gray,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Left
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = price,
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                color = Color.Black
+                color = Color.Black,
             )
         }
-    }
+
 }
 
 
@@ -107,7 +93,17 @@ fun ProductCard(
 fun PreviewProductGrid() {
     val sampleProducts = listOf(
         Product(
-            imageUrl = R.drawable.chuteira,
+            imageUrl = R.drawable.airmax,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.maxdn,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.airzoom,
             name = "Chuteira Nike Tiempo 10",
             price = "R$ 245,99"
         ),
@@ -122,7 +118,7 @@ fun PreviewProductGrid() {
             price = "R$ 245,99"
         ),
         Product(
-            imageUrl = R.drawable.chuteira,
+            imageUrl = R.drawable.airzoom,
             name = "Chuteira Nike Tiempo 10",
             price = "R$ 245,99"
         ),
@@ -132,17 +128,7 @@ fun PreviewProductGrid() {
             price = "R$ 245,99"
         ),
         Product(
-            imageUrl = R.drawable.chuteira,
-            name = "Chuteira Nike Tiempo 10",
-            price = "R$ 245,99"
-        ),
-        Product(
-            imageUrl = R.drawable.chuteira,
-            name = "Chuteira Nike Tiempo 10",
-            price = "R$ 245,99"
-        ),
-        Product(
-            imageUrl = R.drawable.chuteira,
+            imageUrl = R.drawable.airmax,
             name = "Chuteira Nike Tiempo 10",
             price = "R$ 245,99"
         ),

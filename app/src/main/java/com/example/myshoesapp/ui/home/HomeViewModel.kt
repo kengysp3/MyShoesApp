@@ -1,4 +1,4 @@
-package com.example.myshoesapp.ui.homescreen
+package com.example.myshoesapp.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,26 +12,29 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(): ViewModel() {
+class HomeViewModel() : ViewModel() {
     private val produtoRepository = ProdutoRepository()
     private val userRepository = UserRepository()
     private val categorieRepository = CategorieRepository()
     private val _homeUiSate = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val homeUiState: StateFlow<HomeUiState> = _homeUiSate.asStateFlow()
 
-    fun intents(intents: HomeIntent){
+    fun intents(intents: HomeIntent) {
 
-        when(intents){
-            HomeIntent.LoadScreen -> {loadHomeScreen()}
+        when (intents) {
+            HomeIntent.LoadScreen -> {
+                loadHomeScreen()
+            }
         }
 
     }
 
-    private fun loadHomeScreen(){
+    private fun loadHomeScreen() {
 
         viewModelScope.launch {
             delay(2000)
-            _homeUiSate.update { HomeUiState.Success(serarchUser(), searchProducts(), searchCategories())
+            _homeUiSate.update {
+                HomeUiState.Success(serarchUser(), searchProducts(), searchCategories())
             }
         }
     }

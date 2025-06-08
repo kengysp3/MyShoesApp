@@ -1,4 +1,4 @@
-package com.example.myshoesapp.ui.homescreen
+package com.example.myshoesapp.ui.home
 
 
 sealed class HomeIntent {

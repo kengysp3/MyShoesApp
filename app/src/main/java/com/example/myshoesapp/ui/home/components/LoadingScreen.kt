@@ -1,4 +1,4 @@
-package com.example.myshoesapp.ui.homescreen.components
+package com.example.myshoesapp.ui.home.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

@@ -1,4 +1,4 @@
-package com.example.myshoesapp.ui.homescreen.components
+package com.example.myshoesapp.ui.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -42,12 +42,12 @@ fun SearchBar(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp)
             .background(Color.White, shape = RoundedCornerShape(24.dp))
             .border(
                 width = 1.dp,
                 color = Color.LightGray,
-                shape = RoundedCornerShape(24.dp)
+                shape = RoundedCornerShape(15.dp)
             )
             .padding(horizontal = 8.dp)
             .fillMaxWidth()

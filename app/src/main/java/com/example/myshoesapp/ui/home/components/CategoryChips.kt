@@ -1,4 +1,4 @@
-package com.example.myshoesapp.ui.homescreen.components
+package com.example.myshoesapp.ui.home.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,7 +28,7 @@ fun CategoryChips(
     onCategorySelected: (String) -> Unit
 ) {
     LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(categories) { category ->
@@ -45,12 +45,11 @@ fun CategoryChips(
                     containerColor = if (selectedCategory == category.name) OrangeFilterSelected else Color.White,
                     selectedContainerColor = OrangeFilterSelected
                 ),
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(12.dp),
             )
         }
     }
 }
-
 
 
 @Preview(showBackground = true)

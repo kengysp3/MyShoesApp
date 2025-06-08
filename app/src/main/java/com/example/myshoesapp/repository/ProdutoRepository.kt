@@ -5,9 +5,19 @@ import com.example.myshoesapp.model.Product
 
 class ProdutoRepository {
 
-    fun searchProducts() = listOf(
+    fun searchProducts() =listOf(
         Product(
-            imageUrl = R.drawable.chuteira,
+            imageUrl = R.drawable.airmax,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.maxdn,
+            name = "Chuteira Nike Tiempo 10",
+            price = "R$ 245,99"
+        ),
+        Product(
+            imageUrl = R.drawable.airzoom,
             name = "Chuteira Nike Tiempo 10",
             price = "R$ 245,99"
         ),
@@ -22,7 +32,7 @@ class ProdutoRepository {
             price = "R$ 245,99"
         ),
         Product(
-            imageUrl = R.drawable.chuteira,
+            imageUrl = R.drawable.airzoom,
             name = "Chuteira Nike Tiempo 10",
             price = "R$ 245,99"
         ),
@@ -32,20 +42,12 @@ class ProdutoRepository {
             price = "R$ 245,99"
         ),
         Product(
-            imageUrl = R.drawable.chuteira,
-            name = "Chuteira Nike Tiempo 10",
-            price = "R$ 245,99"
-        ),
-        Product(
-            imageUrl = R.drawable.chuteira,
-            name = "Chuteira Nike Tiempo 10",
-            price = "R$ 245,99"
-        ),
-        Product(
-            imageUrl = R.drawable.chuteira,
+            imageUrl = R.drawable.airmax,
             name = "Chuteira Nike Tiempo 10",
             price = "R$ 245,99"
         ),
 
         )
+
+
 }
