@@ -22,9 +22,9 @@ import com.example.myshoesapp.ui.home.components.SearchBar
 
 
 @Composable
-fun HomeScreen(mainUiState: HomeUiState) {
+fun HomeScreen(homeUiState: HomeUiState, myIntent: (HomeIntent) ->Unit ) {
 
-    when (mainUiState) {
+    when (homeUiState) {
 
         is HomeUiState.Error -> {
 
@@ -51,7 +51,7 @@ fun HomeScreen(mainUiState: HomeUiState) {
                 var searchQuery by remember { mutableStateOf("Pesquisar") }
 
                 Text(
-                    text = "Olá ${mainUiState.user.nome}",
+                    text = "Olá ${homeUiState.user.nome}",
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(8.dp).padding(top = 12.dp).align(Alignment.CenterHorizontally)
                 )
@@ -66,14 +66,14 @@ fun HomeScreen(mainUiState: HomeUiState) {
                 var selectedCategory by remember { mutableStateOf("Todos") }
 
                 CategoryChips(
-                    categories = mainUiState.listCategory,
+                    categories = homeUiState.listCategory,
                     selectedCategory = selectedCategory,
                     onCategorySelected = {
                         selectedCategory = it
                         // aplique filtro nos produtos, se necessário
                     }
                 )
-                ProductGrid(products = mainUiState.listItem)
+                ProductGrid(products = homeUiState.listItem, myIntent)
 
             }
     }

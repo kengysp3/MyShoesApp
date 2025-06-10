@@ -1,6 +1,7 @@
 package com.example.myshoesapp.ui.home.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,11 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myshoesapp.R
 import com.example.myshoesapp.model.Product
+import com.example.myshoesapp.ui.home.HomeIntent
+import com.example.myshoesapp.ui.home.HomeUiState
 import com.example.myshoesapp.ui.theme.GrayNeutral
 
 
 @Composable
-fun ProductGrid( mainUiState: Main products: List<Product>) {
+fun ProductGrid( products: List<Product>, myIntent: (HomeIntent) ->Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -41,9 +44,9 @@ fun ProductGrid( mainUiState: Main products: List<Product>) {
     ) {
         items(products) { product ->
             ProductCard(
-                imageRes = product.imageUrl,
-                name = product.name,
-                price = product.price
+                product,
+                myIntent
+
             )
         }
     }
@@ -53,26 +56,24 @@ fun ProductGrid( mainUiState: Main products: List<Product>) {
 
 @Composable
 fun ProductCard(
-    imageRes: Int,
-    name: String,
-    price: String,
+    product: Product,
+    myIntent: (HomeIntent) ->Unit,
     modifier: Modifier = Modifier
 ) {
 
         Column(
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp).clickable { myIntent(HomeIntent.OnProductClickWithData(product)) }
         ) {
             Image(
-                onClick= { onIntent(HomeUiIntent.OnProductClickWithData(product) }
-                painter = painterResource(id = imageRes),
-                contentDescription = name,
+                painter = painterResource(id = product.imageUrl),
+                contentDescription = product.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = name,
+                text = product.name,
                 style = MaterialTheme.typography.bodySmall,
                 color = GrayNeutral,
                 maxLines = 2,
@@ -81,7 +82,7 @@ fun ProductCard(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = price,
+                text = product.name,
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                 color = Color.Black,
             )
@@ -139,7 +140,7 @@ fun PreviewProductGrid() {
 
     MaterialTheme {
         Surface {
-            ProductGrid(products = sampleProducts)
+            //ProductGrid(products = sampleProducts)
         }
     }
 }

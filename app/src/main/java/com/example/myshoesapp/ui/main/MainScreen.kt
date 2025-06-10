@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,28 +40,29 @@ import com.example.myshoesapp.ui.theme.GrayLight
 import com.example.myshoesapp.ui.theme.MyShoesAppTheme
 import com.example.myshoesapp.ui.theme.OrangeFilterSelected
 import com.example.myshoesapp.ui.theme.White
+import org.koin.androidx.compose.koinViewModel
 
 
 class MainActivity : ComponentActivity() {
-
-    private val mainViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LaunchedEffect(Unit) {
-                mainViewModel.intents(HomeIntent.LoadScreen)
-            }
 
-            val uiState by mainViewModel.homeUiState.collectAsState()
-            MainScreen(uiState)
+            val mViewModel: HomeViewModel = koinViewModel()
+            val uiState by mViewModel.homeUiState.collectAsState()
+
+            LaunchedEffect(Unit) {
+                mViewModel.intents(HomeIntent.LoadScreen)
+            }
+            MainScreen(uiState) {intent -> mViewModel.intents(intent)}
         }
     }
 }
 
 @Composable
-fun MainScreen(mainUiState: HomeUiState) {
+fun MainScreen(homeUiState: HomeUiState, myIntent: (HomeIntent) ->Unit) {
     val navController = rememberNavController()
     val items = mutableListOf(
         BottomNavItem.Home,
@@ -115,7 +115,7 @@ fun MainScreen(mainUiState: HomeUiState) {
                     .padding(innerPadding)
                     .background(White)
             ) {
-                composable(BottomNavItem.Home.route) { HomeScreen(mainUiState) }
+                composable(BottomNavItem.Home.route) { HomeScreen(homeUiState, myIntent ) }
                 composable(BottomNavItem.Cart.route) { ShoppingCartScreen() }
                 composable(BottomNavItem.Profile.route) { ProfileScreen() }
 
@@ -185,7 +185,7 @@ fun PreviewMainScreen() {
     val fakeState = HomeUiState.Success(user = user, listItem = itens,categories)
 
     MyShoesAppTheme {
-        MainScreen(mainUiState = fakeState)
+      //  MainScreen(mainUiState = fakeState, {intent -> mViewModel.intents(intent)})
     }
 }
 
