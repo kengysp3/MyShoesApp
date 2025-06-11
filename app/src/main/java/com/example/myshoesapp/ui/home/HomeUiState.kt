@@ -11,6 +11,5 @@ sealed class HomeUiState {
         val listItem: List<Product>,
         val listCategory: List<Categorie>
     ) : HomeUiState()
-
     data class Error(val message: String) : HomeUiState()
 }

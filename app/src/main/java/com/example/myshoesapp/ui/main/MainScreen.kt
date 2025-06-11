@@ -30,6 +30,7 @@ import com.example.myshoesapp.R
 import com.example.myshoesapp.model.Categorie
 import com.example.myshoesapp.model.Product
 import com.example.myshoesapp.model.User
+import com.example.myshoesapp.ui.detail.ProductDetailScreen
 import com.example.myshoesapp.ui.home.HomeIntent
 import com.example.myshoesapp.ui.home.HomeScreen
 import com.example.myshoesapp.ui.home.HomeUiState
@@ -56,56 +57,61 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(Unit) {
                 mViewModel.intents(HomeIntent.LoadScreen)
             }
-            MainScreen(uiState) {intent -> mViewModel.intents(intent)}
+            MainScreen(uiState) { intent -> mViewModel.intents(intent) }
         }
     }
 }
 
 @Composable
-fun MainScreen(homeUiState: HomeUiState, myIntent: (HomeIntent) ->Unit) {
+fun MainScreen(homeUiState: HomeUiState, myIntent: (HomeIntent) -> Unit) {
     val navController = rememberNavController()
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination
     val items = mutableListOf(
         BottomNavItem.Home,
         BottomNavItem.Cart,
         BottomNavItem.Profile,
 
-    )
+        )
     MyShoesAppTheme {
         Scaffold(
 
             bottomBar = {
-                val currentRoute = navController.currentBackStackEntryAsState().value?.destination
-                NavigationBar(containerColor = Color.White) {
-                    items.forEach { item ->
-                        val itemSelec = item.route == currentRoute?.route
-                        NavigationBarItem(
-                            selected = itemSelec,
-                            onClick = {
-                                navController.navigate(item.route) {
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true
+                if (currentRoute?.route in items.map { it.route })
+                    NavigationBar(containerColor = Color.White) {
+                        items.forEach { item ->
+                            val itemSelec = item.route == currentRoute?.route
+                            NavigationBarItem(
+                                selected = itemSelec,
+                                onClick = {
+                                    navController.navigate(item.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
                                     }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                            icon = {
-                                Icon(modifier = Modifier.size(24.dp), painter = painterResource(item.icon), contentDescription = item.label)
-                            },
-                            label = {
-                                Text(
-                                    item.label,
-                                    color = if (itemSelec) OrangeFilterSelected else Color.Gray
+                                },
+                                icon = {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        painter = painterResource(item.icon),
+                                        contentDescription = item.label
+                                    )
+                                },
+                                label = {
+                                    Text(
+                                        item.label,
+                                        color = if (itemSelec) OrangeFilterSelected else Color.Gray
+                                    )
+                                },
+                                colors = NavigationBarItemDefaults.colors(
+                                    indicatorColor = Color.Transparent,
+                                    selectedIconColor = OrangeFilterSelected,
+                                    unselectedIconColor = GrayLight
                                 )
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = Color.Transparent,
-                                selectedIconColor = OrangeFilterSelected,
-                                unselectedIconColor = GrayLight
                             )
-                        )
+                        }
                     }
-                }
             }
         ) { innerPadding ->
             NavHost(
@@ -115,10 +121,28 @@ fun MainScreen(homeUiState: HomeUiState, myIntent: (HomeIntent) ->Unit) {
                     .padding(innerPadding)
                     .background(White)
             ) {
-                composable(BottomNavItem.Home.route) { HomeScreen(homeUiState, myIntent ) }
+                composable(BottomNavItem.Home.route) {
+                    HomeScreen(
+                        homeUiState, myIntent,
+                        onProductClick = { product ->
+                            navController.currentBackStackEntry
+                                ?.savedStateHandle
+                                ?.set("product", product)
+                            navController.navigate("detail")
+                        })
+                }
                 composable(BottomNavItem.Cart.route) { ShoppingCartScreen() }
                 composable(BottomNavItem.Profile.route) { ProfileScreen() }
+                composable("detail") {
+                    val product = navController
+                        .previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.get<Product>("product")
 
+                    product?.let {
+                        ProductDetailScreen(product = it)
+                    }
+                }
             }
         }
     }
@@ -182,10 +206,10 @@ fun PreviewMainScreen() {
 
     val user = User("Kengy")
 
-    val fakeState = HomeUiState.Success(user = user, listItem = itens,categories)
+    val fakeState = HomeUiState.Success(user = user, listItem = itens, categories)
 
     MyShoesAppTheme {
-      //  MainScreen(mainUiState = fakeState, {intent -> mViewModel.intents(intent)})
+        //  MainScreen(mainUiState = fakeState, {intent -> mViewModel.intents(intent)})
     }
 }
 
