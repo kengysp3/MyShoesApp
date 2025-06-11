@@ -54,11 +54,11 @@ fun ProductDetailScreen(product: Product) {
     var isFavorited by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Conteúdo rolável
+
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 88.dp) // espaço para os botões
+                .padding(bottom = 88.dp)
         ) {
             Image(
                 painter = painterResource(product.imageUrl),
@@ -130,10 +130,9 @@ fun ProductDetailScreen(product: Product) {
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 
-            Spacer(modifier = Modifier.height(32.dp)) // espaço extra antes do botão
+            Spacer(modifier = Modifier.height(32.dp))
         }
 
-        // Botões fixos no rodapé
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -144,7 +143,7 @@ fun ProductDetailScreen(product: Product) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
-                onClick = { /* ação */ },
+                onClick = {  },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF8D41),
                     contentColor = Color.White
@@ -158,7 +157,7 @@ fun ProductDetailScreen(product: Product) {
             }
 
             IconButton(
-                onClick = { /* ação carrinho */ },
+                onClick = {  },
                 modifier = Modifier
                     .size(48.dp)
                     .border(

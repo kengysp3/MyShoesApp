@@ -2,8 +2,11 @@ package com.example.myshoesapp.model
 
 import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 @SuppressLint("SupportAnnotationUsage")
+@Parcelize
 data class Product(
     val id: Int = 0,
     val name: String,
@@ -17,6 +20,6 @@ data class Product(
         "Durabilidade e resistência em cada detalhe.",
         "Tecnologia avançada para melhor desempenho.",
         "Inspirado na próxima geração de atletas."
-    ).random(),
+    ).shuffled().toString(),
     @DrawableRes val imageUrl: Int
-)
+) : Parcelable

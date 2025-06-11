@@ -34,7 +34,7 @@ import com.example.myshoesapp.ui.theme.GrayNeutral
 
 
 @Composable
-fun ProductGrid( products: List<Product>, myIntent: (HomeIntent) ->Unit) {
+fun ProductGrid( products: List<Product>, myIntent: (HomeIntent) ->Unit, onProductClick: (Product)-> Unit ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -45,7 +45,8 @@ fun ProductGrid( products: List<Product>, myIntent: (HomeIntent) ->Unit) {
         items(products) { product ->
             ProductCard(
                 product,
-                myIntent
+                myIntent,
+                onProductClick
 
             )
         }
@@ -58,12 +59,13 @@ fun ProductGrid( products: List<Product>, myIntent: (HomeIntent) ->Unit) {
 fun ProductCard(
     product: Product,
     myIntent: (HomeIntent) ->Unit,
+    onProductClick: (Product)-> Unit,
     modifier: Modifier = Modifier
 ) {
 
         Column(
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.padding(8.dp).clickable { myIntent(HomeIntent.OnProductClickWithData(product)) }
+            modifier = Modifier.padding(8.dp).clickable { onProductClick(product) }
         ) {
             Image(
                 painter = painterResource(id = product.imageUrl),

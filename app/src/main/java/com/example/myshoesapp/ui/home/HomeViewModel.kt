@@ -30,8 +30,6 @@ class HomeViewModel(
             HomeIntent.LoadScreen -> {
                 loadHomeScreen()
             }
-
-            is HomeIntent.OnProductClickWithData -> TODO()
         }
 
     }
@@ -50,7 +48,6 @@ class HomeViewModel(
             }
         }
     }
-
     private fun searchProducts() = produtoRepository.searchProducts()
 
     private fun serarchUser() = userRepository.searchUser()

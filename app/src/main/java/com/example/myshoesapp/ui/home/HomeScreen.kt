@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.myshoesapp.model.Product
 import com.example.myshoesapp.ui.home.components.CategoryChips
 import com.example.myshoesapp.ui.home.components.LoadingScreen
 import com.example.myshoesapp.ui.home.components.ProductGrid
@@ -22,7 +23,7 @@ import com.example.myshoesapp.ui.home.components.SearchBar
 
 
 @Composable
-fun HomeScreen(homeUiState: HomeUiState, myIntent: (HomeIntent) ->Unit ) {
+fun HomeScreen(homeUiState: HomeUiState, myIntent: (HomeIntent) ->Unit , onProductClick: (Product)-> Unit) {
 
     when (homeUiState) {
 
@@ -70,11 +71,9 @@ fun HomeScreen(homeUiState: HomeUiState, myIntent: (HomeIntent) ->Unit ) {
                     selectedCategory = selectedCategory,
                     onCategorySelected = {
                         selectedCategory = it
-                        // aplique filtro nos produtos, se necessário
                     }
                 )
-                ProductGrid(products = homeUiState.listItem, myIntent)
-
+                ProductGrid(products = homeUiState.listItem, myIntent, onProductClick)
             }
     }
 
